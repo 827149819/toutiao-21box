@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    hdasjd
     <router-view/>
   </div>
 </template>
