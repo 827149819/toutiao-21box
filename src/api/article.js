@@ -29,3 +29,34 @@ export const delArticle = (articleId) => {
     url: `/mp/v1_0/articles/${articleId}`
   })
 }
+
+export const addArticle = (data, draft = false) => {
+  return request({
+    method: 'POST',
+    // :target  接口文档中的路径参数，需要在url中传递
+    url: '/mp/v1_0/articles',
+    params: {
+      draft: draft
+    },
+    data: data
+  })
+}
+
+export const updArticle = (articleId, data, draft = false) => {
+  return request({
+    method: 'put',
+    // :target  接口文档中的路径参数，需要在url中传递
+    url: `/mp/v1_0/articles/${articleId}`,
+    params: {
+      draft: draft
+    },
+    data: data
+  })
+}
+
+export const getArticle = (articleId) => {
+  return request({
+    method: 'get',
+    url: `/mp/v1_0/articles/${articleId}`
+  })
+}

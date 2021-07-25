@@ -8,7 +8,7 @@
         </el-breadcrumb>
       </div>
       <!-- 数据筛选表单 -->
-      <el-form style="margin-top: 10px" ref="form" :model="form" size="mini" label-width="45px">
+      <el-form style="margin-top: 10px"  size="mini" label-width="45px">
         <el-form-item label="状态">
           <el-radio-group v-model="status">
             <el-radio :label="null">全部</el-radio>
@@ -88,7 +88,7 @@
           label="操作">
           <template slot-scope="scope">
             <el-button size="mini" circle type="primary"
-                       icon="el-icon-edit"></el-button>
+                       icon="el-icon-edit" @click="$router.push('/publish?id=' + scope.row.id)"></el-button>
             <el-button size="mini" type="danger" circle
                        icon="el-icon-delete" @click="onDeleteArticle(scope.row.id)"></el-button>
           </template>
@@ -114,16 +114,6 @@ export default {
   props: {},
   data () {
     return {
-      form: {
-        name: '',
-        region: '',
-        date1: '',
-        date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        desc: ''
-      },
       articles: [],
       articleStatus: [
         { status: 0, text: '草稿', type: '' },
