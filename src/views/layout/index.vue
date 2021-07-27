@@ -35,6 +35,7 @@
 
 import myAside from '@/views/layout/components/myaside'
 import { getUserProfile } from '@/api/user'
+import globalBus from '@/utils/global-bus'
 
 export default {
   name: 'layoutIndex',
@@ -54,14 +55,19 @@ export default {
   watch: {},
   created () {
     this.loadUserProfile()
+
+    // 注册函数
+    globalBus.$on('updateUser', (data) => {
+      // this.user = data  对象之间赋值的是引用，会导致相互影响的问题
+      this.user.name = data.name
+      this.user.photo = data.photo
+    })
   },
   mounted () {},
   methods: {
     loadUserProfile () {
       getUserProfile().then(res => {
-        console.log(res)
         this.user = res.data.data
-        console.log(this.user.name)
       })
     },
     onLogout: function () {

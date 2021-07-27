@@ -173,7 +173,6 @@ export default {
       }).then(() => {
         delArticle(articleId.toString()).then(res => {
           this.loadArticles(this.page)
-          console.log(res)
         })
       }).catch(() => {
         this.$message({
