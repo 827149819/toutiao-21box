@@ -22,6 +22,15 @@
            <el-radio :label="0">无图</el-radio>
            <el-radio :label="-1">自动</el-radio>
          </el-radio-group>
+         <!--$event：事件本身的参数-->
+         <template v-if="article.cover.type > 0">
+           <upload-cover
+             v-for="(cover, index) in article.cover.type"
+             :key="cover"
+             :cover-image="article.cover.images[index]"
+             @uploadCover="onUploadCover(index, $event)"
+           />
+         </template>
        </el-form-item>
        <el-form-item label="频道" prop="channel_id">
          <el-select v-model="article.channel_id" placeholder="请选择频道">
@@ -69,13 +78,15 @@ import {
 } from 'element-tiptap'
 import 'element-tiptap/lib/index.css'
 import Vue from 'vue'
+import uploadCover from '@/views/publish/components/uploadCover'
 Vue.use(ElementTiptapPlugin, {
   lang: 'zh'
 })
 export default {
   name: 'publishIndex',
   components: {
-    'el-tiptap': ElementTiptap
+    'el-tiptap': ElementTiptap,
+    uploadCover
   },
   props: {},
   data () {
@@ -85,7 +96,7 @@ export default {
         content: '',
         cover: {
           type: 0,
-          image: []
+          images: []
         },
         channel_id: null
       },
@@ -170,6 +181,7 @@ export default {
           })
         } else {
           addArticle(this.article, draft).then(res => {
+            console.log(this.article)
             this.$message.success(`${draft ? '存入草稿' : '发布文章'}成功`)
             this.$router.push('/article')
           })
@@ -186,6 +198,10 @@ export default {
         console.log(res)
         this.article = res.data.data
       })
+    },
+    onUploadCover (index, url) {
+      console.log(url)
+      this.article.cover.images[index] = url
     }
   }
 }
